@@ -88,7 +88,7 @@ export default async function handler(req, res) {
     res.status(200).json({
       success: true,
       developer: 'Abhay Singh',
-      contact: '@abhay_singh_official',
+      contact: 'tg-@darkdeveloper2',
       api_version: '3.0.0',
       query: q,
       timestamp: new Date().toISOString(),
