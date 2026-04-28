@@ -1,7 +1,7 @@
 {
-  "name": "abhay-singh-scraper-api",
-  "version": "1.0.0",
-  "description": "Scraper API by Abhay Singh",
+  "name": "abhay-api-final",
+  "version": "3.0.0",
+  "description": "API by Abhay Singh - Channel & Developer Removed",
   "main": "api/search.js",
   "scripts": {
     "dev": "vercel dev",
