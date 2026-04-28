@@ -1,18 +1,10 @@
-# 🔐 Scraper API by Abhay Singh
+# Abhay Singh API
 
-## 👨‍💻 Developer
-**Abhay Singh** - Contact: @abhay_singh_official
+## 👨‍💻 Developer: Abhay Singh
 
 ## 🔑 API Keys
-| API Key | Purpose |
-|---------|---------|
-| `ABHAY_SINGH_KEY_2024` | Full Access |
-| `DEMO_KEY_123` | Demo Access |
-| `TEST_KEY_456` | Testing |
+- `ABHAY_SINGH_KEY_2024` - Full Access
+- `DEMO_KEY_123` - Demo Access  
+- `TEST_KEY_456` - Test Access
 
-## 📡 Endpoints
-
-### GET /api/search
-```bash
-curl -X GET "https://your-app.vercel.app/api/search?q=QUERY" \
-  -H "X-API-Key: ABHAY_SINGH_KEY_2024"
+## 📡 Endpoint
