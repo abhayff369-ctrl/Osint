@@ -1,22 +1,22 @@
 // ============================================
-// API Key Configuration
+// API KEY CONFIGURATION
 // ============================================
 const VALID_API_KEYS = [
   'ABHAY_SINGH_KEY_2024',
   'DEMO_KEY_123',
-  'TEST_KEY_456'
+  'TEST_KEY_456',
+  'FULL_ACCESS_KEY_789'
 ];
 
-// Function to validate API key
 function isValidApiKey(apiKey) {
   return VALID_API_KEYS.includes(apiKey);
 }
 
 // ============================================
-// Main Handler
+// MAIN API HANDLER - FULL DATA RETURN
 // ============================================
 export default async function handler(req, res) {
-  // Enable CORS
+  // CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-API-Key, Authorization');
@@ -26,16 +26,17 @@ export default async function handler(req, res) {
   }
 
   // ============================================
-  // API Key Authentication
+  // API KEY AUTHENTICATION
   // ============================================
   const apiKey = req.headers['x-api-key'] || req.headers['authorization'] || req.query.api_key;
   
   if (!apiKey) {
     return res.status(401).json({
       success: false,
-      error: 'API Key required',
-      message: 'Please provide API key in header: X-API-Key or ?api_key= parameter',
-      developer: 'Abhay Singh'
+      error: 'API Key Required',
+      message: 'Please provide API key in header: X-API-Key',
+      developer: 'Abhay Singh',
+      contact: 'tg- @darkdeveloper2'
     });
   }
   
@@ -43,79 +44,87 @@ export default async function handler(req, res) {
     return res.status(403).json({
       success: false,
       error: 'Invalid API Key',
-      message: 'The provided API key is not valid',
-      developer: 'Abhay Singh'
+      message: 'The API key you provided is not valid',
+      developer: 'Abhay Singh',
+      contact: '@abhay_singh_official'
     });
   }
 
   // ============================================
-  // Query Parameter
+  // QUERY PARAMETER CHECK
   // ============================================
   const { q } = req.query;
   
   if (!q) {
     return res.status(400).json({
       success: false,
-      error: 'Missing query parameter "q"',
+      error: 'Missing query parameter',
       example: '/api/search?q=QUERY',
-      developer: 'Abhay Singh'
+      developer: 'Abhay Singh',
+      contact: '@abhay_singh_official'
     });
   }
 
   try {
     // ============================================
-    // Scraping Target URL
+    // SCRAPE SOURCE API - FULL DATA
     // ============================================
     const targetUrl = `https://noneusrxleakosintpro.vercel.app/db/TG-@None_usernam3/@None_usernam3/search=${encodeURIComponent(q)}`;
     
+    console.log(`[${new Date().toISOString()}] Query: ${q}`);
     console.log(`[${new Date().toISOString()}] Fetching: ${targetUrl}`);
-    console.log(`[${new Date().toISOString()}] API Key Used: ${apiKey.substring(0, 8)}...`);
     
     const response = await fetch(targetUrl, {
       headers: {
-        'User-Agent': 'AbhaySingh-Scraper/1.0',
+        'User-Agent': 'AbhaySingh-API/1.0',
         'Accept': 'application/json'
       }
     });
     
     if (!response.ok) {
-      throw new Error(`Source API returned ${response.status}`);
+      throw new Error(`Source API error: ${response.status}`);
     }
     
-    const data = await response.json();
-    
-    // Extract data array
-    const extractedData = data.data || [];
-    
-    // Filter passwords only
-    const passwords = extractedData.filter(item => 
-      typeof item === 'string' && item.toLowerCase().startsWith('password:')
-    );
+    const sourceData = await response.json();
     
     // ============================================
-    // Response with Developer Credit
+    // SEND COMPLETE DATA - NO FILTERING
     // ============================================
     res.status(200).json({
       success: true,
       developer: 'Abhay Singh',
-      developer_contact: '@abhay_singh_official',
-      api_version: '1.0.0',
+      contact: '@abhay_singh_official',
+      developer_website: 'https://github.com/abhay-singh',
+      api_version: '3.0.0',
       query: q,
       timestamp: new Date().toISOString(),
-      totalResults: extractedData.length,
-      passwordCount: passwords.length,
-      data: extractedData,
-      passwords: passwords
+      source_url: targetUrl,
+      
+      // Complete original data - jo bhi aaya wahi bhej rahe hain
+      channel: sourceData.CHANNEL || null,
+      original_developer: sourceData.DEVELOPER || null,
+      total_items: sourceData.data ? sourceData.data.length : 0,
+      
+      // FULL DATA - BILKUL JO AAYA HAI WAHI
+      data: sourceData.data || [],
+      
+      // Additional statistics
+      metadata: {
+        request_id: Math.random().toString(36).substring(7),
+        api_key_used: apiKey.substring(0, 8) + '...',
+        response_time: new Date().toISOString()
+      }
     });
     
   } catch (error) {
-    console.error('Scraping error:', error);
+    console.error('API Error:', error);
     res.status(500).json({
       success: false,
-      error: error.message,
+      error: 'Internal Server Error',
+      message: error.message,
       query: q,
       developer: 'Abhay Singh',
-      message: 'Please contact @abhay_singh_official for support'
+      contact: 'tg-@darkdeveloper2'
     });
   }
 }
